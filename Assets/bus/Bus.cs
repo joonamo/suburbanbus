@@ -38,11 +38,9 @@ public class Bus : MonoBehaviour
 
         rb.velocity = Vector3.Lerp(rb.velocity, transform.forward * speed + Vector3.up * rb.velocity.y, traction.Evaluate(velPercent));
         if (accelerator != 0) {
-            Debug.Log(Mathf.Sign(velDir) + "" + Mathf.Sign(accelerator));
             if (speed < 0.5 || Mathf.Sign(velDir) == Mathf.Sign(accelerator)) {
                 float accel = accelCurve.Evaluate(velPercent) * accelerator * accelMult;
                 rb.AddRelativeForce(Vector3.forward * accel, ForceMode.VelocityChange);
-                Debug.DrawLine(transform.position, transform.position + transform.up * accel * 10);
             } else {
                 rb.AddRelativeForce(Vector3.forward * -brakeMultiplier * brakeCurve.Evaluate(velPercent));
             }
@@ -50,11 +48,8 @@ public class Bus : MonoBehaviour
             rb.AddRelativeForce(Vector3.forward * -2.0f);
         }
 
-        Debug.DrawLine(transform.position, transform.position + transform.forward * velPercent * 20);
-
         if (steering != 0) {
             float steerAmount = rotateCurve.Evaluate(velPercent) * steering * steerMult;
-            Debug.DrawLine(transform.position, transform.position + transform.right * steerAmount);
             transform.Rotate(Vector3.up * steerAmount, Space.Self);
         }
     }
