@@ -40,12 +40,12 @@ public class Bus : MonoBehaviour
         if (accelerator != 0) {
             if (speed < 0.5 || Mathf.Sign(velDir) == Mathf.Sign(accelerator)) {
                 float accel = accelCurve.Evaluate(velPercent) * accelerator * accelMult;
-                rb.AddRelativeForce(Vector3.forward * accel, ForceMode.VelocityChange);
+                rb.AddForce(transform.forward * accel, ForceMode.VelocityChange);
             } else {
-                rb.AddRelativeForce(Vector3.forward * -brakeMultiplier * brakeCurve.Evaluate(velPercent));
+                rb.AddForce(transform.forward * -brakeMultiplier * brakeCurve.Evaluate(velPercent));
             }
         } else {
-            rb.AddRelativeForce(Vector3.forward * -2.0f);
+            rb.AddForce(transform.forward * -2.0f);
         }
 
         if (steering != 0) {
