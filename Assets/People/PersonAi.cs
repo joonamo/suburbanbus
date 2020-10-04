@@ -33,13 +33,15 @@ public class PersonAi : MonoBehaviour
 
     if (!isWaiting) {
       wanderTarget = closestStop.transform.position;
+      currentSpeed = maxWanderSpeed * Random.Range(2.0f, 4.0f);
+    } else {
+      wanderTarget = transform.position;
     }
   }
 
   // Start is called before the first frame update
   void Start()
   {
-    wanderTarget = transform.position;
     cc = GetComponent<CharacterController>();
     currentDirection = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)).normalized;
     Random.Range(minWanderSpeed, maxWanderSpeed);
@@ -62,7 +64,7 @@ public class PersonAi : MonoBehaviour
     } else {
       // Going home
       if (Vector3.Distance(transform.position, wanderTarget) < 2.0 ) {
-        Destroy(this);
+        Destroy(gameObject);
       }
     }
 
@@ -70,5 +72,12 @@ public class PersonAi : MonoBehaviour
     currentDirection = Vector3.Lerp(currentDirection, dirToTarget, Random.Range(minRotateSpeed, maxRotateSpeed)).normalized;
 
     cc.SimpleMove(currentDirection * currentSpeed);
+  }
+
+  void OnTriggerEnter(Collider other) {
+    if (isWaiting && other.transform.tag == "Player") {
+      gm.addPersonToBus(targetStop);
+      Destroy(gameObject);
+    }
   }
 }

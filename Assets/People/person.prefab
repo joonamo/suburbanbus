@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8077147719834066793}
   - component: {fileID: 2554549001722165342}
   - component: {fileID: 640618397749777925}
+  - component: {fileID: 2857298125877410684}
   m_Layer: 0
   m_Name: person
   m_TagString: Untagged
@@ -118,3 +119,16 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!135 &2857298125877410684
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716697502065327804}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0.79999995, z: 0}
