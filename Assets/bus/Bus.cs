@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Bus : MonoBehaviour
 {
+    public float accelerator = 0.0f;
+    public float steering = 0.0f;
+
     public float accelMult = 10.0f;
     public float steerMult = 100.0f;
     public float maxVelocity = 10.0f;
@@ -13,7 +16,7 @@ public class Bus : MonoBehaviour
     public AnimationCurve rotateCurve;
     public float brakeMultiplier = 5.0f;
     public AnimationCurve brakeCurve;
-    private Rigidbody rb;
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +31,6 @@ public class Bus : MonoBehaviour
 
     void FixedUpdate() 
     {
-        float accelerator = Input.GetAxis("Accelerate");
-        float steering = Input.GetAxis("Steering");
         Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         float speed = horizontalVelocity.magnitude;
         float velPercent = speed / maxVelocity;
@@ -49,7 +50,7 @@ public class Bus : MonoBehaviour
         }
 
         if (steering != 0) {
-            float steerAmount = rotateCurve.Evaluate(velPercent) * steering * steerMult;
+            float steerAmount = rotateCurve.Evaluate(velPercent) * steering * steerMult * Mathf.Sign(velDir);
             transform.Rotate(Vector3.up * steerAmount, Space.Self);
         }
     }
