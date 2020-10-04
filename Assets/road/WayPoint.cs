@@ -27,9 +27,9 @@ public class WayPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // foreach (var point in availablePoints) {
-        //     Debug.DrawLine(transform.position, point.transform.position);
-        // }
+        foreach (var point in availablePoints) {
+            Debug.DrawLine(transform.position, point.transform.position);
+        }
     }
 
   void OnDrawGizmos()

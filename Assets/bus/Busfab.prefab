@@ -119,8 +119,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.052304268
     - serializedVersion: 3
-      time: 0.9911549
-      value: 0.023583412
+      time: 0.99225354
+      value: 0.07915592
       inSlope: -0.66878206
       outSlope: -0.66878206
       tangentMode: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0.033763457
-      value: 0.14624023
+      value: 0.18048096
       inSlope: 3.0976877
       outSlope: 3.0976877
       tangentMode: 0
@@ -203,8 +203,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.028336376
     - serializedVersion: 3
-      time: 0.36049837
-      value: 0.54238915
+      time: 0.2187137
+      value: 0.62292504
       inSlope: 1.6362122
       outSlope: 1.6362122
       tangentMode: 0
@@ -214,11 +214,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 1.1404585
+      outSlope: 1.1404585
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.036157683
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -268,11 +268,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!136 &3753130961680185584
 CapsuleCollider:

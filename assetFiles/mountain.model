@@ -1,0 +1,14 @@
+# Made using Asset Forge (2.1.0)
+
+:materials
+
+[name:_defaultMat;color:RGBA(0.742, 0.674, 0.502, 1.000);scale:(1.0, 1.0);shader:Default;valueA:0.35;valueB:0.25;]
+
+:models
+
+[name:;collection:Primitives;type:roof_corner;position:(1.5778, 0.0000, -1.0000);rotation:(0.0000, 315.0000, 0.0000);scale:(1.5500, 1.4300, 1.5500);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:roof_corner;position:(-1.9209, 0.3815, -1.1082);rotation:(15.0000, 330.0000, 345.0000);scale:(2.3368, 1.7131, 1.4501);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:roof;position:(3.1062, 0.1250, -1.1701);rotation:(0.0000, 225.0000, 330.0000);scale:(1.6500, 1.5500, 1.7000);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:cylinderVertex_taper%;position:(-1.1000, 0.0000, -1.3500);rotation:(0.0000, 180.0000, 0.0000);scale:(3.2000, 2.0000, 3.7000);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:cylinderVertex_taper%;position:(1.1200, -0.2400, -1.8500);rotation:(0.0000, 180.0000, 0.0000);scale:(2.2400, 3.0400, 3.7000);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:pyramid;position:(0.0300, 0.0000, -1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(8.4600, 3.0100, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat;]

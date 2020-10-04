@@ -15,7 +15,13 @@ public class AiBus : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    
+    var children = gameObject.GetComponentsInChildren<CapsuleCollider>(true);
+    int childCount = children.GetLength(0);
+    Debug.Log("Found children:" + childCount);
+    int enable = Random.Range(0, childCount);
+    for (int i = 0; i < childCount; ++i) {
+      children[i].gameObject.SetActive(i == enable);
+    }
   }
 
   // Update is called once per frame
@@ -61,7 +67,7 @@ public class AiBus : MonoBehaviour
           out hit,
           dangerQueryDist))
       {
-        Debug.DrawLine(targetBus.transform.position, hit.point);
+        // Debug.DrawLine(targetBus.transform.position, hit.point);
         dangerRight = 1.0f - hit.distance / dangerQueryDist;
         //   Debug.DrawLine(targetBus.transform.position, targetBus.transform.position + Vector3.Lerp(targetBus.transform.forward, targetBus.transform.right, 0.4f) * dangerQueryDist);
       }
@@ -100,6 +106,6 @@ public class AiBus : MonoBehaviour
         recoveryMode = 0.0f;
       }
     }
-    Debug.DrawLine(targetBus.transform.position, targetBus.transform.position + targetBus.transform.right * targetBus.steering * 10);
+    // Debug.DrawLine(targetBus.transform.position, targetBus.transform.position + targetBus.transform.right * targetBus.steering * 10);
   }
 }
