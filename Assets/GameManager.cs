@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum GameState
+public enum GameState
 {
   intro,
   game,
@@ -37,18 +37,21 @@ public class GameManager : MonoBehaviour
   public AudioClip tutorial1;
   public AudioClip tutorial2;
   public AudioSource audioOut;
+  public AudioSource collectOut;
   public AudioSource musicOut;
 
   public TMPro.TextMeshProUGUI timeText;
   public TMPro.TextMeshProUGUI statusText;
   public TMPro.TextMeshProUGUI scoreText;
+  public TMPro.TextMeshProUGUI multiplierText;
 
-  GameState gameState = GameState.intro;
   TutorialState tutorialState = TutorialState.collect;
+  public GameState gameState = GameState.intro;
 
   public Bus playerBus;
   public Camera introCamera;
   public Camera gameCamera;
+  private AudioListener listener;
 
   public float personSpawnInterval = 1.0f;
   private float spawnCountdown = 0.0f;
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
     } else if (!audioOut.isPlaying) {
       audioOut.PlayOneShot(hellos[Random.Range(0, hellos.Count)]);
     }
+    collectOut.Play();
     peopleWithTargets[targetStop] += 1;
     updatePeopleInBus();
   }
@@ -77,6 +81,7 @@ public class GameManager : MonoBehaviour
       peopleInBus += targetAmount;
       i++;
     }
+    multiplierText.text = "x " + Mathf.Max(1, peopleInBus); 
   }
 
   public int stopReached(int stop)
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
       scoreText.text = "" + peopleTransported;
       peopleWithTargets[stop] = 0;
       updatePeopleInBus();
-      timer += n;
+      timer += n * 0.9f;
 
       audioOut.PlayOneShot(thanks[Random.Range(0, thanks.Count)]);
     }
@@ -106,6 +111,9 @@ public class GameManager : MonoBehaviour
     gameCamera.enabled = false;
     introCanvas.enabled = true;
     gameCanvas.enabled = false;
+
+    listener = gameCamera.GetComponent<AudioListener>();
+    listener.enabled = false;
   }
 
   void InitializeGame()
@@ -144,6 +152,10 @@ public class GameManager : MonoBehaviour
     gameCanvas.enabled = true;
 
     musicOut.Play();
+    listener.enabled = true;
+
+    updatePeopleInBus();
+    scoreText.text = "0";
   }
 
   // Update is called once per frame

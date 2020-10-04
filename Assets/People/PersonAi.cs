@@ -31,10 +31,13 @@ public class PersonAi : MonoBehaviour
       material.SetColor("_Color", gm.stopColors[targetStop]);
     }
 
-    if (!isWaiting) {
+    if (!isWaiting)
+    {
       wanderTarget = closestStop.transform.position;
       currentSpeed = maxWanderSpeed * Random.Range(2.0f, 4.0f);
-    } else {
+    }
+    else
+    {
       wanderTarget = transform.position;
     }
   }
@@ -53,17 +56,31 @@ public class PersonAi : MonoBehaviour
     if (isWaiting)
     {
       // Wandering
-      if (Vector3.Distance(transform.position, closestStop.transform.position) > wanderDistance)
+      if (
+        gm.gameState == GameState.game &&
+        Vector3.Distance(transform.position, gm.playerBus.transform.position) < 10.0
+        )
+      {
+        wanderTarget = gm.playerBus.transform.position;
+        currentSpeed = maxWanderSpeed * 3.0f;
+      }
+      else if (Vector3.Distance(transform.position, closestStop.transform.position) > wanderDistance)
       {
         wanderTarget = closestStop.transform.position;
-      } else if (Vector3.Distance(transform.position, wanderTarget) < 2.0f || cc.velocity.magnitude < 0.1f) {
+      }
+      else if (Vector3.Distance(transform.position, wanderTarget) < 2.0f || cc.velocity.magnitude < 0.1f)
+      {
         var position = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
         wanderTarget = closestStop.transform.position + position.normalized * Random.Range(wanderDistance * 0.3f, wanderDistance);
         currentSpeed = Random.Range(minWanderSpeed, maxWanderSpeed);
       }
-    } else {
+    }
+    else
+    {
       // Going home
-      if (Vector3.Distance(transform.position, wanderTarget) < 2.0 ) {
+      if (Vector3.Distance(transform.position, wanderTarget) < 2.0)
+      {
+        closestStop.GetComponent<AudioSource>().Play();
         Destroy(gameObject);
       }
     }
@@ -74,8 +91,10 @@ public class PersonAi : MonoBehaviour
     cc.SimpleMove(currentDirection * currentSpeed);
   }
 
-  void OnTriggerEnter(Collider other) {
-    if (isWaiting && other.transform.tag == "Player") {
+  void OnTriggerEnter(Collider other)
+  {
+    if (isWaiting && other.transform.tag == "Player")
+    {
       gm.addPersonToBus(targetStop);
       Destroy(gameObject);
     }

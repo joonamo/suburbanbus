@@ -12,13 +12,16 @@ public class AiBus : MonoBehaviour
   private float recoveryMode = 0.0f;
   public float recoveryTime = 15.0f;
 
+  public LayerMask rayMask;
+
   // Start is called before the first frame update
   void Start()
   {
     var children = gameObject.GetComponentsInChildren<CapsuleCollider>(true);
     int childCount = children.GetLength(0);
     int enable = Random.Range(0, childCount);
-    for (int i = 0; i < childCount; ++i) {
+    for (int i = 0; i < childCount; ++i)
+    {
       children[i].gameObject.SetActive(i == enable);
     }
   }
@@ -58,13 +61,15 @@ public class AiBus : MonoBehaviour
       }
       float dot = Vector3.Dot(targetBus.transform.right, toTarget.normalized);
       RaycastHit hit;
+      Vector3 RayStartPos = targetBus.transform.position + Vector3.up * 0.5f;
       float dangerRight = 0.0f;
       float dangerLeft = 0.0f;
       if (Physics.Raycast(
-          targetBus.transform.position,
+          RayStartPos,
           Vector3.Lerp(targetBus.transform.forward, targetBus.transform.right, 0.4f),
           out hit,
-          dangerQueryDist))
+          dangerQueryDist,
+          rayMask))
       {
         // Debug.DrawLine(targetBus.transform.position, hit.point);
         dangerRight = 1.0f - hit.distance / dangerQueryDist;
@@ -72,21 +77,26 @@ public class AiBus : MonoBehaviour
       }
 
       if (Physics.Raycast(
-          targetBus.transform.position,
+          RayStartPos,
           Vector3.Lerp(targetBus.transform.forward, -targetBus.transform.right, 0.4f),
           out hit,
-          dangerQueryDist))
+          dangerQueryDist,
+          rayMask
+          ))
       {
         //   Debug.DrawLine(targetBus.transform.position, targetBus.transform.position + Vector3.Lerp(targetBus.transform.forward, -targetBus.transform.right, 0.4f) * dangerQueryDist);
-        Debug.DrawLine(targetBus.transform.position, hit.point);
+        // Debug.DrawLine(targetBus.transform.position, hit.point);
         dangerLeft = 1.0f - hit.distance / dangerQueryDist;
       }
       targetBus.steering = steerCurve.Evaluate(Mathf.Abs(dot)) * Mathf.Sign(dot);
-      if (dangerLeft > 0 && dangerLeft > dangerRight) {
+      if (dangerLeft > 0 && dangerLeft > dangerRight)
+      {
         targetBus.steering = Mathf.Clamp(targetBus.steering + 1.5f, -1.0f, 1.0f);
-      } else if (dangerRight > 0) {
+      }
+      else if (dangerRight > 0)
+      {
         targetBus.steering = Mathf.Clamp(targetBus.steering - 1.5f, -1.0f, 1.0f);
-      } 
+      }
 
       float pointingAt = 0.1f + Mathf.Abs(Vector3.Dot(targetBus.transform.forward, toTarget.normalized)) * 0.5f;
       targetBus.accelerator = pointingAt;

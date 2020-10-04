@@ -23,7 +23,7 @@ public class BusStop : MonoBehaviour
       material.SetColor("_Color", gm.stopColors[idx]);
     }
     Color highColor = gm.stopColors[this.idx];
-    highColor.a = 0.5f;
+    highColor.a = 1.0f;
     highlighter.material.SetColor("_Color", highColor);
 
     if (!introStop) {

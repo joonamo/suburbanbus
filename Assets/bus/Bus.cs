@@ -17,6 +17,8 @@ public class Bus : MonoBehaviour
     public float brakeMultiplier = 5.0f;
     public AnimationCurve brakeCurve;
     public Rigidbody rb;
+
+    public AudioSource crashSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,12 @@ public class Bus : MonoBehaviour
         if (steering != 0) {
             float steerAmount = rotateCurve.Evaluate(velPercent) * steering * steerMult * Mathf.Sign(velDir);
             transform.Rotate(Vector3.up * steerAmount, Space.Self);
+        }
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if (Time.fixedUnscaledTime > 0.1f) {
+            crashSound.Play();
         }
     }
 }
