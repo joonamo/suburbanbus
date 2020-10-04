@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     List<int> peopleWithTargets = new List<int>();
+    public List<Color> stopColors = new List<Color>();
     public int peopleInBus = 0;
     public int busCapacity = 30;
     public int peopleTransported = 0;
@@ -31,9 +32,24 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitializeGame();
+    }
+
+    void InitializeGame() {
+        int numStopTypes = stopColors.Count;
+        peopleTransported = 0;
+        peopleWithTargets = new List<int>(numStopTypes); 
+
         var allBusStops = GameObject.FindObjectsOfType<BusStop>();
-        foreach (var stop in allBusStops) {
-            peopleWithTargets.Add(0);
+        int stopCount = allBusStops.GetLength(0);
+        for (int i = 0; i < stopCount; ++i) {
+            var temp = allBusStops[i];
+            int swapIdx = Random.Range(0, stopCount);
+            allBusStops[i] = allBusStops[swapIdx];
+            allBusStops[swapIdx] = temp;
+        }
+        for (int i = 0; i < stopCount; ++i) {
+            allBusStops[i].OnGameInit(i % numStopTypes, this);
         }
         stopsAmount = allBusStops.Length;
     }
