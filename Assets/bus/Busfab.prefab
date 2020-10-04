@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -377997320510527688}
   - component: {fileID: 3753130961680185583}
   - component: {fileID: 3753130961680185584}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Busfab
   m_TagString: Player
   m_Icon: {fileID: 0}

@@ -9,6 +9,13 @@ enum GameState
   over
 }
 
+enum TutorialState
+{
+  collect,
+  deliver,
+  done
+}
+
 public class GameManager : MonoBehaviour
 {
   List<int> peopleWithTargets = new List<int>();
@@ -24,11 +31,20 @@ public class GameManager : MonoBehaviour
   public Canvas introCanvas;
   public List<TMPro.TextMeshProUGUI> targetTexts;
 
+  public List<AudioClip> hellos;
+  public List<AudioClip> thanks;
+  public AudioClip gameover;
+  public AudioClip tutorial1;
+  public AudioClip tutorial2;
+  public AudioSource audioOut;
+  public AudioSource musicOut;
+
   public TMPro.TextMeshProUGUI timeText;
   public TMPro.TextMeshProUGUI statusText;
   public TMPro.TextMeshProUGUI scoreText;
 
   GameState gameState = GameState.intro;
+  TutorialState tutorialState = TutorialState.collect;
 
   public Bus playerBus;
   public Camera introCamera;
@@ -40,6 +56,13 @@ public class GameManager : MonoBehaviour
 
   public void addPersonToBus(int targetStop)
   {
+    if (tutorialState == TutorialState.collect) {
+      tutorialState = TutorialState.deliver;
+      statusText.text = "Take the passangers to their stops!";
+      audioOut.PlayOneShot(tutorial2);
+    } else if (!audioOut.isPlaying) {
+      audioOut.PlayOneShot(hellos[Random.Range(0, hellos.Count)]);
+    }
     peopleWithTargets[targetStop] += 1;
     updatePeopleInBus();
   }
@@ -60,11 +83,18 @@ public class GameManager : MonoBehaviour
   {
     int n = peopleWithTargets[stop];
     if (n > 0) {
+      if (tutorialState == TutorialState.deliver)
+      {
+        tutorialState = TutorialState.done;
+        statusText.text = "";
+      }
       peopleTransported += peopleInBus * n;
       scoreText.text = "" + peopleTransported;
       peopleWithTargets[stop] = 0;
       updatePeopleInBus();
       timer += n;
+
+      audioOut.PlayOneShot(thanks[Random.Range(0, thanks.Count)]);
     }
     return n;
   }
@@ -112,6 +142,8 @@ public class GameManager : MonoBehaviour
     gameCamera.enabled = true;
     introCanvas.enabled = false;
     gameCanvas.enabled = true;
+
+    musicOut.Play();
   }
 
   // Update is called once per frame
@@ -124,6 +156,8 @@ public class GameManager : MonoBehaviour
           if (Input.GetButtonDown("Submit")) {
             InitializeGame();
             gameState = GameState.game;
+            statusText.text = "Collect passangers!";
+            audioOut.PlayOneShot(tutorial1);
           }
           break;
         }
@@ -134,7 +168,8 @@ public class GameManager : MonoBehaviour
             timer = 0.0f;
             playerBus.enabled = false;
             gameState = GameState.over;
-            statusText.text = "Game Over!";
+            statusText.text = "Game Over!\nPress enter to play again";
+            audioOut.PlayOneShot(gameover);
           }
           timeText.text = timer.ToString("#0.00");
 
