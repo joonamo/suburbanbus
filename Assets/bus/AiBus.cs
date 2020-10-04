@@ -17,7 +17,6 @@ public class AiBus : MonoBehaviour
   {
     var children = gameObject.GetComponentsInChildren<CapsuleCollider>(true);
     int childCount = children.GetLength(0);
-    Debug.Log("Found children:" + childCount);
     int enable = Random.Range(0, childCount);
     for (int i = 0; i < childCount; ++i) {
       children[i].gameObject.SetActive(i == enable);

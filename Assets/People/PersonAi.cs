@@ -56,9 +56,9 @@ public class PersonAi : MonoBehaviour
       if (Vector3.Distance(transform.position, closestStop.transform.position) > wanderDistance)
       {
         wanderTarget = closestStop.transform.position;
-      } else if (Vector3.Distance(transform.position, wanderTarget) < 2.0f) {
+      } else if (Vector3.Distance(transform.position, wanderTarget) < 2.0f || cc.velocity.magnitude < 0.1f) {
         var position = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
-        wanderTarget = closestStop.transform.position + position.normalized * Random.Range(wanderDistance * 0.7f, wanderDistance);
+        wanderTarget = closestStop.transform.position + position.normalized * Random.Range(wanderDistance * 0.3f, wanderDistance);
         currentSpeed = Random.Range(minWanderSpeed, maxWanderSpeed);
       }
     } else {

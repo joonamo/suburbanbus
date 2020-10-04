@@ -8,6 +8,7 @@ public class BusStop : MonoBehaviour
   private GameManager gm;
   public GameObject whatIsPerson;
   public float personSpawnDistance = 2.0f;
+  public bool introStop = false;
 
   public void OnGameInit(int idx, GameManager gm)
   {
@@ -19,9 +20,11 @@ public class BusStop : MonoBehaviour
       material.SetColor("_Color", gm.stopColors[idx]);
     }
 
-    spawnWaitingPerson();
-    spawnWaitingPerson();
-    spawnWaitingPerson();
+    if (!introStop) {
+      spawnWaitingPerson();
+      spawnWaitingPerson();
+      spawnWaitingPerson();
+    }
   }
 
   private PersonAi spawnPerson(Vector3 where, int targetStop, bool wander) {
@@ -45,10 +48,14 @@ public class BusStop : MonoBehaviour
     spawnPerson(transform.position, targetStop, true);
   }
 
-  // Update is called once per frame
-  void Update()
+  void Start()
   {
-
+    if (introStop) {
+      this.gm = GameObject.FindObjectOfType<GameManager>();
+      spawnWaitingPerson();
+      spawnWaitingPerson();
+      spawnWaitingPerson();
+    }
   }
 
   void OnTriggerEnter(Collider other)
