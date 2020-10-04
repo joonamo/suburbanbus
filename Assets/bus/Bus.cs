@@ -17,12 +17,14 @@ public class Bus : MonoBehaviour
     public float brakeMultiplier = 5.0f;
     public AnimationCurve brakeCurve;
     public Rigidbody rb;
+    private GameManager gm;
 
     public AudioSource crashSound;
     // Start is called before the first frame update
     void Start()
     {
        rb = GetComponent<Rigidbody>(); 
+       gm = GameObject.FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -58,7 +60,7 @@ public class Bus : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        if (Time.fixedUnscaledTime > 0.1f) {
+        if (gm && gm.gameState != GameState.intro) {
             crashSound.Play();
         }
     }

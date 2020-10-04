@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
   public Bus playerBus;
   public Camera introCamera;
   public Camera gameCamera;
-  private AudioListener listener;
 
   public float personSpawnInterval = 1.0f;
   private float spawnCountdown = 0.0f;
@@ -111,9 +110,6 @@ public class GameManager : MonoBehaviour
     gameCamera.enabled = false;
     introCanvas.enabled = true;
     gameCanvas.enabled = false;
-
-    listener = gameCamera.GetComponent<AudioListener>();
-    listener.enabled = false;
   }
 
   void InitializeGame()
@@ -152,7 +148,6 @@ public class GameManager : MonoBehaviour
     gameCanvas.enabled = true;
 
     musicOut.Play();
-    listener.enabled = true;
 
     updatePeopleInBus();
     scoreText.text = "0";
